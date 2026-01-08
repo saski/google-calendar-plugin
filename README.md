@@ -130,12 +130,50 @@ Use the provided icon generator:
    - `icon-48.png`
    - `icon-128.png`
 
+## Distribution
+
+### Building for Chrome Web Store
+
+```bash
+# Build extension
+npm run build
+
+# Create package for submission
+npm run package
+
+# Output: dist/extension-v{VERSION}.zip
+```
+
+### Version Management
+
+```bash
+# Bump patch version (0.1.0 → 0.1.1)
+npm run version:patch
+
+# Bump minor version (0.1.0 → 0.2.0)
+npm run version:minor
+
+# Bump major version (0.1.0 → 1.0.0)
+npm run version:major
+```
+
+### Release Process
+
+See `RELEASE_CHECKLIST.md` for complete release process.
+
+### Chrome Web Store Submission
+
+See `store-assets/SUBMISSION_GUIDE.md` for detailed submission instructions.
+
 ## Next Steps
 
 1. ✅ Install dependencies: `npm install --legacy-peer-deps`
-2. ⚠️ Create icon files (use `generate-icons.html`)
+2. ✅ Create icon files (use `generate-icons.html`)
 3. ⚠️ Configure OAuth credentials (see Prerequisites)
 4. ⚠️ Load extension in Chrome
 5. ⚠️ Test on Google Calendar
 6. ⚠️ Run automated tests: `npm test` (after fixing test environment)
+7. ⚠️ Create store assets (screenshots, descriptions)
+8. ⚠️ Host privacy policy
+9. ⚠️ Submit to Chrome Web Store
 

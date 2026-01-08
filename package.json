@@ -5,7 +5,12 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "build": "node scripts/build.js",
+    "package": "npm run build && node scripts/package.js",
+    "version:patch": "node scripts/version.js patch",
+    "version:minor": "node scripts/version.js minor",
+    "version:major": "node scripts/version.js major"
   },
   "devDependencies": {
     "@jest/test-sequencer": "^29.7.0",

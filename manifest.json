@@ -3,6 +3,7 @@
   "name": "Google Calendar Full-Year View",
   "version": "0.1.0",
   "description": "Adds a full-year view to Google Calendar with sequential day layout",
+  "privacy_policy": "https://saski.github.io/google-calendar-plugin/",
   "permissions": [
     "identity",
     "storage",
@@ -17,7 +18,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://calendar.google.com/*"],
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
       "js": [
         "src/utils/date-utils.js",
         "src/utils/event-parser.js",
@@ -28,7 +31,9 @@
         "src/content/view-injector.js",
         "src/content/content.js"
       ],
-      "css": ["src/styles/inject.css"],
+      "css": [
+        "src/styles/inject.css"
+      ],
       "run_at": "document_idle"
     }
   ],
@@ -54,8 +59,9 @@
         "assets/icons/icon-48.png",
         "assets/icons/icon-128.png"
       ],
-      "matches": ["https://calendar.google.com/*"]
+      "matches": [
+        "https://calendar.google.com/*"
+      ]
     }
   ]
 }
-
