@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "Google Calendar Full-Year View",
+  "version": "0.1.0",
+  "description": "Adds a full-year view to Google Calendar with sequential day layout",
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://calendar.google.com/*",
+    "https://www.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "js": [
+        "src/utils/date-utils.js",
+        "src/utils/event-parser.js",
+        "src/utils/oauth-handler.js",
+        "src/content/calendar-api.js",
+        "src/content/event-renderer.js",
+        "src/content/full-year-view.js",
+        "src/content/view-injector.js",
+        "src/content/content.js"
+      ],
+      "css": ["src/styles/inject.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "oauth2": {
+    "client_id": "477284037986-vh39enltkuuifgqq0k2duk57kc8hvtkc.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/styles/full-year-view.css",
+        "assets/icons/icon-16.png",
+        "assets/icons/icon-48.png",
+        "assets/icons/icon-128.png"
+      ],
+      "matches": ["https://calendar.google.com/*"]
+    }
+  ]
+}
+

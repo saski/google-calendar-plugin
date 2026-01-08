@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Generator - Google Calendar Full-Year View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .icon-preview {
+            display: inline-block;
+            margin: 10px;
+            text-align: center;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .instructions {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Extension Icon Generator</h1>
+    
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Click "Generate Icons" to create placeholder icons</li>
+            <li>Right-click each icon and "Save image as..."</li>
+            <li>Save to: <code>assets/icons/</code> with names:
+                <ul>
+                    <li><code>icon-16.png</code></li>
+                    <li><code>icon-48.png</code></li>
+                    <li><code>icon-128.png</code></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <button onclick="generateIcons()">Generate Icons</button>
+    <button onclick="downloadAll()">Download All Icons</button>
+
+    <div id="previews"></div>
+
+    <script>
+        function createIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#4285f4');
+            gradient.addColorStop(1, '#34a853');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+            
+            // White border
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size / 16;
+            ctx.strokeRect(0, 0, size, size);
+            
+            // Calendar icon (simplified)
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const iconSize = size * 0.6;
+            
+            // Calendar base
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(centerX - iconSize/2, centerY - iconSize/2, iconSize, iconSize * 0.7);
+            
+            // Calendar top (spiral binding)
+            ctx.fillStyle = '#ea4335';
+            ctx.fillRect(centerX - iconSize/2, centerY - iconSize/2, iconSize, iconSize * 0.15);
+            
+            // Calendar lines (days)
+            ctx.strokeStyle = '#4285f4';
+            ctx.lineWidth = size / 32;
+            for (let i = 1; i < 3; i++) {
+                const y = centerY - iconSize/2 + iconSize * 0.15 + (iconSize * 0.55 / 3) * i;
+                ctx.beginPath();
+                ctx.moveTo(centerX - iconSize/2 + iconSize * 0.1, y);
+                ctx.lineTo(centerX + iconSize/2 - iconSize * 0.1, y);
+                ctx.stroke();
+            }
+            
+            // Year text
+            ctx.fillStyle = '#4285f4';
+            ctx.font = `bold ${size * 0.2}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('YR', centerX, centerY + iconSize * 0.4);
+            
+            return canvas;
+        }
+
+        function generateIcons() {
+            const previews = document.getElementById('previews');
+            previews.innerHTML = '';
+            
+            const sizes = [16, 48, 128];
+            sizes.forEach(size => {
+                const canvas = createIcon(size);
+                canvas.id = `icon-${size}`;
+                canvas.dataset.size = size;
+                
+                const div = document.createElement('div');
+                div.className = 'icon-preview';
+                div.innerHTML = `<p>${size}x${size}</p>`;
+                div.appendChild(canvas);
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.textContent = `Download ${size}x${size}`;
+                downloadBtn.onclick = () => downloadIcon(size);
+                div.appendChild(downloadBtn);
+                
+                previews.appendChild(div);
+            });
+        }
+
+        function downloadIcon(size) {
+            const canvas = document.getElementById(`icon-${size}`);
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `icon-${size}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        function downloadAll() {
+            const sizes = [16, 48, 128];
+            sizes.forEach((size, index) => {
+                setTimeout(() => {
+                    const canvas = createIcon(size);
+                    canvas.toBlob(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `icon-${size}.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    });
+                }, index * 200);
+            });
+        }
+
+        // Auto-generate on load
+        window.onload = generateIcons;
+    </script>
+</body>
+</html>
+
