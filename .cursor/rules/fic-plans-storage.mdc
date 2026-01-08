@@ -1,0 +1,48 @@
+---
+description: Storage location for intermediate plans generated with FIC commands
+globs: 
+alwaysApply: true
+---
+
+# FIC Plans Storage
+
+## Storage Location
+
+All intermediate plans generated with FIC (Frequent Intentional Compaction) commands MUST be stored in:
+
+**`thoughts/plans/`**
+
+## File Naming Convention
+
+Plans should follow this naming pattern:
+
+```
+thoughts/plans/YYYY-MM-DD-descriptive-name.md
+```
+
+Examples:
+- `thoughts/plans/2026-01-08-google-calendar-plugin-fix-icon-loading.md`
+- `thoughts/plans/2026-01-07-google-calendar-full-year-view.md`
+- `thoughts/plans/2026-01-02-oauth-implementation-plan.md`
+
+## When to Use This Location
+
+- Plans generated from FIC_COMMAND.md or FIC_PROMPT.md
+- Implementation plans created during development
+- Task breakdowns and step-by-step guides
+- Any intermediate planning documents
+
+## What NOT to Store Here
+
+- Final documentation (use root-level README.md or docs/)
+- Research documents (use `thoughts/research/` if needed)
+- Project status (PROJECT_STATUS.md can stay here or move to root)
+- User-facing guides (can stay here or move to docs/)
+
+## Integration with FIC Workflow
+
+This location aligns with the FIC workflow's Plan Phase:
+- Plans are created during the Plan Phase
+- Stored in `thoughts/plans/` for persistence
+- Referenced during Implementation Phase
+- Updated as needed during Validation Phase
